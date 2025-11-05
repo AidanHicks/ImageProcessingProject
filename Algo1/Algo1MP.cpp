@@ -13,7 +13,6 @@ using std::chrono::duration_cast;
 
 int main()
 {
-	auto algoStart = high_resolution_clock::now();
 	
 	//Load the image in grayscale
 	Mat img = imread("C:\\Users\\MESH USER\\Downloads\\edgeflower.jpg", IMREAD_GRAYSCALE);
@@ -25,6 +24,7 @@ int main()
 
 
 	Mat edgeImage = Mat::zeros(img.size(), CV_8UC1);
+	auto algoStart = high_resolution_clock::now();
 
 	//Run the loop across multiple threads, automatically dividing rows among CPU cores)
 	#pragma omp parallel for schedule(static)

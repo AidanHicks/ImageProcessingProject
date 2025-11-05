@@ -12,7 +12,6 @@ using std::chrono::duration_cast;
 
 int main()
 {
-	auto algoStart = high_resolution_clock::now();
 	//Load the image in grayscale
 	Mat img = imread("C:\\Users\\MESH USER\\Downloads\\edgeflower.jpg", IMREAD_GRAYSCALE);
 	if (img.empty())
@@ -21,8 +20,11 @@ int main()
 		return -1;
 	}
 
+
 	//Create an output image to store the edges
 	Mat edgeImage = Mat::zeros(img.size(), CV_8UC1);
+	auto algoStart = high_resolution_clock::now();
+
 	//Loop through each pixel (execute on 1 thread)
 	for (int y = 0; y < img.rows - 1; y++) {
 		for (int x = 0; x < img.cols - 1; x++) {

@@ -1,0 +1,23 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+TestResults/
+
+# Rider
+.idea/
+
+# Others
+*.cache
+*.log
+*.db
+*.DS_Store
+
+# Git LFS
+*.ipch
