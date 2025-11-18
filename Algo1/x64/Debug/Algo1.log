@@ -1,1 +1,13 @@
-﻿  Algo1.vcxproj -> C:\Users\MESH USER\Desktop\MainProj\Algo1\x64\Debug\Algo1.exe
+﻿  main.cpp
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244: 'argument': conversion from 'const _Rep' to '_Ty', possible loss of data
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:         with
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:         [
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:             _Rep=__int64
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:         ]
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:         and
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:         [
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:             _Ty=int
+C:\Users\MESH USER\Desktop\MainProj\Algo1\Algo1\main.cpp(58,23): warning C4244:         ]
+  Algo1.vcxproj -> C:\Users\MESH USER\Desktop\MainProj\Algo1\x64\Debug\Algo1.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.

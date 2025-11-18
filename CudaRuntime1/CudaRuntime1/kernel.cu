@@ -3,10 +3,26 @@
 #include <cmath>
 #include <chrono>
 #include <cuda_runtime.h>
+#include <fstream>
+#include <vector>
 
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
+
+int numTimings = 10000;
+
+void saveCSV(const vector<long long>& durations, const string& fileName) {
+    ofstream file(fileName);
+    if (!file.is_open()) return;
+
+    for (size_t i = 0; i < durations.size(); i++) {
+        file << i << "," << durations[i] << "\n";
+    }
+
+    file.close();
+}
+
 
 //KERNEL
 //Each thread executes this function (each thread computes unique x,y pixel) (e.g. block idx 0, block dim 256, thread idx 0 = (0*256)+0 = pixel 0)
@@ -70,25 +86,40 @@ int main()
     dim3 gridSize((width + blockSize.x - 1) / blockSize.x, //enough blocks to cover the image and handles non-divisible dimensions
 		(height + blockSize.y - 1) / blockSize.y); 
 
-    auto algoStart = high_resolution_clock::now();
+    // Vector to store the timing results for each iteration
+    vector<long long> durations(numTimings);
 
-    // Launch kernel on GPU
-    EdgeDetectKernel << <gridSize, blockSize >> > (device_inputImage, device_outputImage, width, height, step); 
+    // Run the CUDA kernel many times to gather timing data
+    for (int i = 0; i < numTimings; i++) {
 
-    // Wait for GPU to finish
-    cudaDeviceSynchronize();
+        // Start CPU timer right before launching the kernel
+        auto start = high_resolution_clock::now();
 
-    auto algoEnd = high_resolution_clock::now();
-    const auto algoDuration = duration_cast<microseconds>(algoEnd - algoStart).count();
+        // Launch kernel on the GPU
+        EdgeDetectKernel <<<gridSize, blockSize>>> (
+            device_inputImage, device_outputImage, width, height, step
+            );
 
-    // Copy output image back to CPU
+        // Wait for the GPU to complete the kernel execution
+        cudaDeviceSynchronize();
+
+        // Stop timer after the kernel has fully completed
+        auto end = high_resolution_clock::now();
+
+        // Store execution time (in microseconds) for this iteration
+        durations[i] = duration_cast<microseconds>(end - start).count();
+    }
+
+    // Save all kernel timings to a CSV file
+    saveCSV(durations, "C:\\Users\\MESH USER\\Desktop\\MainProj\\Algo1\\Timings\\CudaTimings.csv");
+
     cudaMemcpy(edgeImage.data, device_outputImage, height * step, cudaMemcpyDeviceToHost);
 
-    cout << "CUDA Algorithm Process Time: " << algoDuration << " microseconds" << endl;
 
     // Show results
     imshow("Original Image", img);
     imshow("Edge Detected Image - CUDA", edgeImage);
+    cout << "Algorithm Finished";
     waitKey(0);
 
     // Free GPU memory
