@@ -47,7 +47,7 @@ Mat BaseAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBloc
 		timings.push_back(blockAvg);
 		PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
 	}
-	SaveCSV(timings, "BaseTimingsOptiOFF");
+	SaveCSV(timings, "BaseTimings");
 	PrintAverageAcrossBlocks(timings, timingBlocks);
 	return edgeImage;
 }
@@ -96,7 +96,7 @@ Mat OpenMPAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBl
 		timings.push_back(blockAvg);
 		PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
 	}
-	SaveCSV(timings, "OpenMPTimingsOptiOFF");
+	SaveCSV(timings, "OpenMPTimings");
 	PrintAverageAcrossBlocks(timings, timingBlocks);
 	return edgeImage;
 }

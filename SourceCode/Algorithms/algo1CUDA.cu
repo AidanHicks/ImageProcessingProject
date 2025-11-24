@@ -68,7 +68,7 @@ Mat RunKernel(Mat img, Mat edgeImage, int timingBlocks, int timingsPerBlock) {
         timings.push_back(blockAvg);
         PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
     }
-    SaveCSV(timings, "CUDATimingsOptiOFF");
+    SaveCSV(timings, "CUDATimings");
     PrintAverageAcrossBlocks(timings, timingBlocks);
     cudaMemcpy(edgeImage.data, device_outputImage, height * step, cudaMemcpyDeviceToHost);
     return edgeImage;
