@@ -64,7 +64,7 @@ Mat RunKernel(Mat img, Mat edgeImage, int timingBlocks, int timingsPerBlock) {
             auto algoDuration = duration_cast<microseconds>(end - start).count();
             blockTotalTime += algoDuration;
         }
-        long blockAvg = blockTotalTime / timingsPerBlock;
+        double blockAvg = blockTotalTime / timingsPerBlock;
         timings.push_back(blockAvg);
         PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
     }

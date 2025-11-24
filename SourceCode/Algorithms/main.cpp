@@ -7,13 +7,13 @@ int main() {
 	Mat baseImage = LoadImageGrayscale("C:\\Users\\MESH USER\\Desktop\\CS\\SampleImages\\edgeflower.jpg");
     
 	Mat baseEdgeImage = LoadEdgeImage(baseImage);
-	baseEdgeImage = BaseAlgorithm(baseImage, baseEdgeImage, 2, 10000);
+	baseEdgeImage = BaseAlgorithm(baseImage, baseEdgeImage, 10, 10000);
 
 	Mat openmpEdgeImage = LoadEdgeImage(baseImage);
-	openmpEdgeImage = OpenMPAlgorithm(baseImage, openmpEdgeImage, 2, 10000);
+	openmpEdgeImage = OpenMPAlgorithm(baseImage, openmpEdgeImage, 10, 10000);
 
 	Mat cudaEdgeImage = LoadEdgeImage(baseImage);
-	cudaEdgeImage = RunKernel(baseEdgeImage, cudaEdgeImage, 2, 10000);
+	cudaEdgeImage = RunKernel(baseEdgeImage, cudaEdgeImage, 10, 10000);
 	
 	
 	DisplayImage("Base Image", baseImage);

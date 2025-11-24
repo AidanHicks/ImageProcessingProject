@@ -1,0 +1,5 @@
+# Visual Studio IntelliSense cache
+.vs/
+ipch/
+**/ipch/
+*.ipch

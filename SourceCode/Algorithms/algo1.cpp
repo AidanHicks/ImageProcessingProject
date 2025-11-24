@@ -41,7 +41,7 @@ Mat BaseAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBloc
 			auto algoDuration = duration_cast<microseconds>(algoEnd - algoStart).count();
 			blockTotalTime += algoDuration;
 		}
-		long blockAvg = blockTotalTime / timingsPerBlock;
+		double blockAvg = blockTotalTime / timingsPerBlock;
 		timings.push_back(blockAvg);
 		PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
 	}
@@ -88,7 +88,7 @@ Mat OpenMPAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBl
 			auto algoDuration = duration_cast<microseconds>(algoEnd - algoStart).count();
 			blockTotalTime += algoDuration;
 		}
-		long blockAvg = blockTotalTime / timingsPerBlock;
+		double blockAvg = blockTotalTime / timingsPerBlock;
 		timings.push_back(blockAvg);
 		PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
 	}
