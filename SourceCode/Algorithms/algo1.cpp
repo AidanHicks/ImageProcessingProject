@@ -34,6 +34,8 @@ Mat BaseAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBloc
 					if (G > 255) G = 255;
 					if (G < 0) G = 0;
 
+					volatile int temp = G;
+
 					edgeImage.at<uchar>(y, x) = G;
 				}
 			}
@@ -45,7 +47,7 @@ Mat BaseAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBloc
 		timings.push_back(blockAvg);
 		PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
 	}
-	SaveCSV(timings, "BaseTimings");
+	SaveCSV(timings, "BaseTimingsOptiOFF");
 	PrintAverageAcrossBlocks(timings, timingBlocks);
 	return edgeImage;
 }
@@ -81,6 +83,8 @@ Mat OpenMPAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBl
 					if (G > 255) G = 255;
 					if (G < 0) G = 0;
 
+					volatile int temp = G;
+
 					outPtr[x] = (uchar)G;
 				}
 			}
@@ -92,7 +96,7 @@ Mat OpenMPAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBl
 		timings.push_back(blockAvg);
 		PrintCompletedBlock(i, timingsPerBlock, blockTotalTime);
 	}
-	SaveCSV(timings, "OpenMPTimings");
+	SaveCSV(timings, "OpenMPTimingsOptiOFF");
 	PrintAverageAcrossBlocks(timings, timingBlocks);
 	return edgeImage;
 }
