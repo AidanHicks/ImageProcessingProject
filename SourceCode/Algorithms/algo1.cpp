@@ -1,4 +1,4 @@
-#include "helpers.h"
+﻿#include "helpers.h"
 #include "algo1.h"
 #include <chrono>
 #include <omp.h>
@@ -99,4 +99,59 @@ Mat OpenMPAlgorithm(Mat& img, Mat& edgeImage, int timingBlocks, int timingsPerBl
 	SaveCSV(timings, "OpenMPTimings");
 	PrintAverageAcrossBlocks(timings, timingBlocks);
 	return edgeImage;
+}
+
+Mat BaseMultiClassColorSegmentation(Mat& img, Mat& segImage, int timingBlocks, int timingsPerBlock, int classes)
+{
+	cout << "Base Multi-Class Color Segmentation begin...\n";
+	vector<long> timings;
+
+	// Split grayscale range into K equal bins
+	double binSize = 256.0 / classes;
+
+	// Predefined color table
+	vector<Vec3b> colors = {
+		Vec3b(255,0,0),   // Blue
+		Vec3b(0,255,0),   // Green
+		Vec3b(0,0,255),   // Red
+		Vec3b(255,255,0), // Cyan
+		Vec3b(255,0,255), // Magenta
+		Vec3b(0,255,255)  // Yellow
+	};
+
+	for (int b = 0; b < timingBlocks; b++) {
+		long blockTotalTime = 0;
+
+		for (int r = 0; r < timingsPerBlock; r++) {
+			auto algoStart = high_resolution_clock::now();
+
+			// -------- MULTI-CLASS COLOR SEGMENTATION ----------
+			for (int y = 0; y < img.rows; y++) {
+				for (int x = 0; x < img.cols; x++) {
+
+					int pixel = img.at<uchar>(y, x);
+
+					// Determine class index
+					int cls = min((int)(pixel / binSize), classes - 1);
+
+					volatile int temp = cls; // avoid optimization
+
+					// Assign class color
+					segImage.at<Vec3b>(y, x) = colors[cls];
+				}
+			}
+
+			auto algoEnd = high_resolution_clock::now();
+			blockTotalTime += duration_cast<microseconds>(algoEnd - algoStart).count();
+		}
+
+		double blockAvg = blockTotalTime / timingsPerBlock;
+		timings.push_back(blockAvg);
+		PrintCompletedBlock(b, timingsPerBlock, blockTotalTime);
+	}
+
+	SaveCSV(timings, "BaseMultiClassColorSeg");
+	PrintAverageAcrossBlocks(timings, timingBlocks);
+
+	return segImage;
 }

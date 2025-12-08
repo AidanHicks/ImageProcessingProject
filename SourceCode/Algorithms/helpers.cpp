@@ -21,8 +21,18 @@ Mat LoadImageGrayscale(string filePath) {
 	return img;
 }
 
+Mat LoadImageColor(string filePath) {
+	Mat img = imread(filePath);
+	return img;
+}
+
 Mat LoadEdgeImage(Mat baseImage) {
 	Mat edgeImage = Mat::zeros(baseImage.size(), CV_8UC1);
+	return edgeImage;
+}
+
+Mat LoadSegImage(Mat baseImage) {
+	Mat edgeImage = Mat::zeros(baseImage.size(), CV_8UC3);
 	return edgeImage;
 }
 
